@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import FloatingAnimation from "@/components/animations/Floating_Animations";
+import { Geist, Geist_Mono, JetBrains_Mono, Oxanium } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+
+const oxaniumHeading = Oxanium({subsets:['latin'],variable:'--font-heading'});
+
+const jetbrainsMono = JetBrains_Mono({subsets:['latin'],variable:'--font-mono'});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,9 +28,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={cn("bg-black h-full", "antialiased", geistSans.variable, geistMono.variable, "font-mono", jetbrainsMono.variable, oxaniumHeading.variable)}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex w-screen h-screen items-center justify-center bg-hero-pattern bg-cover">
+        <div className="flex w-screen h-screen absolute -bottom-2/12 mask-t-to-50%">
+          <FloatingAnimation colorStops={["#7b6b9c", "#19174a", "#320070", "#1f252e"]} amplitude={3} speed={0.7} blend={-1}/>
+        </div>
+          {children}
+      </body>
     </html>
   );
 }

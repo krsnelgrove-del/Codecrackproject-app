@@ -1,0 +1,154 @@
+"use client"
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import CombinationCard from "@/components/combinationcard";
+import{ motion } from "motion/react";
+
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
+
+import AlertCard from "@/components/alertCard";
+
+export default function Home() {
+  const [inputCode, setInputCode] = useState("");
+  const [initCode, setInitCode] = useState(0);
+  const [firstRun, setFirstRun] = useState(false);
+  const [animationKey, setAnimationKey] = useState(0);
+  const [attemptsCount, setAttemptsCount] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hintActive, setHintActive] = useState(false);
+  const [alertMessage, setAlertMessage] = useState<React.ReactNode>("");
+
+  const router = useRouter();
+  const max: number = 999999;
+  const min: number = 100000;
+
+  function GenerateRandomInt() {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+
+  const handleInputChange = (val: string) => {
+    setInputCode(val);
+  }
+
+  const handleCodeSubmit = async (code: string, event: React.SubmitEvent) => {
+    event.preventDefault();
+    
+    setInputCode(code);
+
+    let newAttempts: number = attemptsCount + 1;
+    setAttemptsCount(newAttempts);
+
+    if (code.toString() === initCode.toString()) {
+      //seamless snapshotted transition with push
+      if(!document.startViewTransition) {
+      router.push("/dashboard");
+      return;
+      }
+
+      document.startViewTransition(() => {
+        router.push("/dashboard");
+      })
+
+    } else {
+      setAlertMessage("Perhaps you need a little hint? Press 'Hint' for a... hint");
+      
+      setAnimationKey((prev) => prev + 1);
+      setIsSubmitting(true);
+      await new Promise((resolve) => setTimeout(resolve, 6000));
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleHintActive = async () => {
+    setAlertMessage((`definitely not ${initCode}`))
+    setAnimationKey((prev) => prev + 1);
+    setHintActive(true);
+
+    await new Promise((resolve) => setTimeout(resolve, 4000));
+    setHintActive(false);
+  };
+
+    useEffect(() => {
+    if (firstRun === false) {
+      setInitCode(GenerateRandomInt());
+      setFirstRun(true);
+    }
+  });
+
+return (
+  <div className="relative flex min-h-screen w-full items-center justify-center p-4 sm:p-8 ">
+    <main className="flex flex-col items-center justify-center h-auto w-full max-w-xl bg-blue-300/10 backdrop-blur-sm">        
+      <motion.div
+
+      initial={
+        {
+          x:-1000,
+          opacity: 0,
+        }
+      }
+
+      animate={
+        {
+          x:[-1000, 50, 0],
+          opacity: [0, 0, 1],        
+        }
+      }
+      
+      transition={
+        {
+          duration: 0.5
+        }
+      }
+      >
+        <motion.div
+        initial={{
+          boxShadow: "0px 0px 50px rgba(0, 29, 201, 0)",
+        }}
+
+        animate={{
+          boxShadow: ["0px 0px 0px rgba(0, 0, 201, 0)", "0px 0px 50px rgba(100, 0, 201, 1)", "0px 0px 50px rgba(0, 0, 201, 0)"],
+
+        }}
+
+        transition={{
+        repeat: Infinity,
+        repeatType: "loop",
+        duration: 4,
+        ease: "linear",
+
+        }}
+        >
+        <CombinationCard
+          secretCode={initCode} 
+          inputValue={inputCode} 
+          titleText={(
+          <h1 className= "text-6xl sm:text-6xl text-white text-center">
+            Operation:
+            <span className="text-orange-400 mask-b-from-50% font-bold relative top-4"> OVERTHINK</span>
+          </h1>)}
+          bodyText={(
+            <p className="text-xl sm:text-2xl text-gray-200 text-center">
+              There is definitely something extremely important hidden behind this wall. <span className="text-md sm:text-xl">
+              </span>
+          </p>
+          )}
+          onHintActive={handleHintActive} 
+          onSubmitCode={handleCodeSubmit} 
+          onInputChanged={handleInputChange}
+          className={hintActive ? "blur-sm" : ""}
+        />
+      </motion.div>
+      </motion.div>
+
+      {(isSubmitting || hintActive) && (
+        <AlertCard _animationKey={0} value={alertMessage} className="absolute bottom-0 w-full h-full m-auto"/>)}
+        </main>
+        </div>
+)
+}
