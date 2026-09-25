@@ -17,7 +17,7 @@ interface AlertCardProps {
 export default function AlertCard({
   _animationKey: animationKey = 0,
   value: messageContents = "",
-  className,
+  className
 
 }: AlertCardProps) {
 

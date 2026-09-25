@@ -30,8 +30,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={cn("bg-black h-full", "antialiased", geistSans.variable, geistMono.variable, "font-mono", jetbrainsMono.variable, oxaniumHeading.variable)}
     >
-      <body className="min-h-full flex w-screen h-screen items-center justify-center bg-hero-pattern bg-cover">
-        <div className="flex w-screen h-screen absolute -bottom-2/12 mask-t-to-50%">
+      <body className="min-h-full flex w-full h-full items-center justify-center bg-hero-pattern bg-cover">
+        <div className="flex w-full h-full absolute mask-t-to-50%">
           <FloatingAnimation colorStops={["#7b6b9c", "#19174a", "#320070", "#1f252e"]} amplitude={3} speed={0.7} blend={-1}/>
         </div>
           {children}

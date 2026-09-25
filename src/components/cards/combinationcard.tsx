@@ -3,10 +3,10 @@
 import React, { JSX, useEffect, useRef} from 'react';
 import{ motion, Variants } from "motion/react";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from './ui/input-otp';
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '../ui/input-otp';
 import { FocusableElement } from 'react-aria-components';
 import { Console } from 'console';
-import { COLORS, getRgba, THEME_RGB } from '../app/getRgba';
+import { COLORS, getRgba, THEME_RGB } from '../ui/getRgba';
 import { VibrateIcon } from '@phosphor-icons/react';
 import { cn } from "@/lib/utils"; 
 
@@ -68,7 +68,7 @@ export default function CombinationCard({
   onSubmitCode, 
   onHintActive, 
   onInputChanged,
-  className,
+  className
 }: CombinationCardProps) {
 
   const SECRET_COMBO_ARRAY = Array.from(String(code), Number);

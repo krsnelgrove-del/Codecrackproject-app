@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import CombinationCard from "@/components/combinationcard";
+import CombinationCard from "@/components/cards/combinationcard";
 import{ motion } from "motion/react";
 
 import {
@@ -11,7 +11,7 @@ import {
   AlertTitle,
 } from "@/components/ui/alert"
 
-import AlertCard from "@/components/alertCard";
+import AlertCard from "@/components/cards/alertCard";
 
 export default function Home() {
   const [inputCode, setInputCode] = useState("");
@@ -82,7 +82,7 @@ export default function Home() {
   });
 
 return (
-  <div className="relative flex min-h-screen w-full items-center justify-center p-4 sm:p-8 ">
+  <div className="relative flex min-h-screen w-full items-center justify-center p-4 sm:p-8 z-10">
     <main className="flex flex-col items-center justify-center h-auto w-full max-w-xl bg-blue-300/10 backdrop-blur-sm">        
       <motion.div
 
