@@ -6,7 +6,7 @@ import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from './ui/input-otp';
 import { FocusableElement } from 'react-aria-components';
 import { Console } from 'console';
-import { COLORS, getRgba, THEME_RGB } from '../app/getRGBA';
+import { COLORS, getRgba, THEME_RGB } from '../app/getRgba';
 import { VibrateIcon } from '@phosphor-icons/react';
 import { cn } from "@/lib/utils"; 
 
