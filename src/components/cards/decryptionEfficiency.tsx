@@ -1,7 +1,5 @@
-// components/serverLoad.tsx
 import React from 'react';
 
-// 1. Define the interface matching what Dashboard passes down
 interface DecryptionEfficiencyProps {
   title?: string;
   data?: {
@@ -10,7 +8,6 @@ interface DecryptionEfficiencyProps {
   };
 }
 
-// 2. Destructure title and data directly from the props parameter
 export default function DecryptionEfficiencyCard({ title, data }: DecryptionEfficiencyProps) {
   return (
     <div className="p-4 text-white">

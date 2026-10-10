@@ -1,22 +1,15 @@
 // config/dashboardCards.ts
 import React from "react";
+
 import {
   BreachAttemptsCard,
   ActiveSessionsCard,
   DataTrackerCard,
   DecryptionEfficiencyCard,
-  MemoryLatencyCard,
   ServerLoadCard,
 } from "@/components/cards";
 
-export enum CardTypes {
-    BREACH_ATTEMPTS =  "breach-attempts",
-    ACTIVE_SESSIONS = "active-sessions",
-    DATA_TRACKER = "data-tracker",
-    DECRYPTION_EFFICIENCY = "decryption-efficiency",
-    MEMORY_LATENCY = "memory-latency",
-    SERVER_LOAD = "server-load"
-}
+import serverLatencyCard from "@/components/cards/serverLatency";
 
 export interface CardConfig {
   id: string;
@@ -26,12 +19,20 @@ export interface CardConfig {
   initialData?: Record<string, any>;
 }
 
-export const DashboardCards: CardConfig[] = [
+
+export interface LatencyDataPoint {
+  time: string;
+  latency: number;
+}
+
+
+export const DashboardCards: CardConfig[] = [  
+  
   {
     id: "breach-attempts",
     title: "Breach Attempts",
     component: BreachAttemptsCard,
-    initialData: { totalAttempts: 142, status: "Heh. Not so good." },
+    initialData: { totalAttempts: 142 },
   },
   {
     id: "active-sessions",
@@ -52,10 +53,10 @@ export const DashboardCards: CardConfig[] = [
     initialData: { rate: "94.5392%" },
   },
   {
-    id: "memory-latency",
-    title: "Memory Latency",
-    component: MemoryLatencyCard,
-    initialData: { pingMs: 18 },
+    id: "server-latency",
+    title: "Server Latency",
+    component: serverLatencyCard,
+    initialData: { pingMs: 18},
   },
   {
     id: "server-load",

@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import Link from 'next/link';
 
 interface SideBarButtonProps {
+    iconUrl?: string,
     buttonText?: string;
     url?: string;
     className?: string;
@@ -11,23 +12,24 @@ interface SideBarButtonProps {
 }
 
 export default function SideBarButton({
+    iconUrl,
     buttonText, 
     url, 
     className,
     children
 }: SideBarButtonProps) {
-    /* Weird conditional variable creation. always bugs me...*/
     const content = children || buttonText;
+
 
     if (url) {
         return (
             <Link 
                 href={url} 
                 className={cn(
-                    "flex items-center justify-center rounded-lg bg-amber-500 hover:bg-amber-600 transition-colors p-2 text-white font-medium focus:outline-none focus:ring-2 focus:ring-amber-400", 
+                    "flex flex-col items-center justify-center rounded-lg p-4 text-white font-medium focus:outline-none focus:ring-1", 
                     className
                 )}
-            >
+            >   <img src={iconUrl}></img>
                 {content}
             </Link>
         );
@@ -35,7 +37,7 @@ export default function SideBarButton({
     return (
         <Button 
             className={cn(
-                "flex items-center justify-center rounded-lg bg-amber-500 hover:bg-amber-600 transition-colors p-2 text-white font-medium focus:outline-none focus:ring-2 focus:ring-amber-400", 
+                "flex flex-col items-center justify-center rounded-lg p-4 text-white font-medium focus:outline-none focus:ring-1", 
                 className
             )}
         >

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import FloatingAnimation from "@/components/animations/Floating_Animations";
 import { Geist, Geist_Mono, JetBrains_Mono, Oxanium } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { SystemMetricsPoller } from "./(utils)/systemMetricsPoller";
 
 const oxaniumHeading = Oxanium({subsets:['latin'],variable:'--font-heading'});
 
@@ -30,10 +30,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={cn("bg-black h-full", "antialiased", geistSans.variable, geistMono.variable, "font-mono", jetbrainsMono.variable, oxaniumHeading.variable)}
     >
-      <body className="min-h-full flex w-full h-full items-center justify-center bg-hero-pattern bg-cover">
-        <div className="flex w-full h-full absolute mask-t-to-50%">
-          <FloatingAnimation colorStops={["#7b6b9c", "#19174a", "#320070", "#1f252e"]} amplitude={3} speed={0.7} blend={-1}/>
-        </div>
+      <body className="min-h-full flex w-full h-full items-center justify-center bg-black">
+        <SystemMetricsPoller />
           {children}
       </body>
     </html>

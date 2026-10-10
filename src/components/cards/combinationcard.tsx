@@ -5,9 +5,7 @@ import{ motion, Variants } from "motion/react";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '../ui/input-otp';
 import { FocusableElement } from 'react-aria-components';
-import { Console } from 'console';
-import { COLORS, getRgba, THEME_RGB } from '../ui/getRgba';
-import { VibrateIcon } from '@phosphor-icons/react';
+import { COLORS, getRgba } from '../../app/(utils)/getRgba';
 import { cn } from "@/lib/utils"; 
 
 export enum ButtonType {
@@ -171,8 +169,8 @@ useEffect(() => {
                     isCorrect 
                       ? { 
                           scale: [1, 1.15, 1], 
-                          borderColor: "rgba(34, 197, 94, 0.8)", 
-                          boxShadow: "0px 0px 20px rgba(34, 197, 94, 0.5)" 
+                          borderColor: "rgba(8, 13, 20, 0.5)", 
+                          boxShadow: "0px 0px 20px rgba(8, 13, 20, 1)" 
                         } 
                       : { 
                           scale: 1, 
@@ -211,7 +209,7 @@ useEffect(() => {
           whileHover="hover"
           whileTap="click"
 
-          className="w-1/2 h-14 sm:h-20 rounded-none rounded-bl-3xl border-t border-t-indigo-400/50"
+          className="w-1/2 h-14 sm:h-20 rounded-none rounded-bl-3xl border-t border-t-white/20"
         >
           <span className="text-base sm:text-xl font-semibold">Hint</span>
         </motion.button>
@@ -222,7 +220,7 @@ useEffect(() => {
           animate="visible"
           whileHover="hover"
           whileTap="click"
-          className="w-1/2 h-14 sm:h-20 rounded-none rounded-br-3xl border-t border-t-indigo-400/50 text-white"
+          className="w-1/2 h-14 sm:h-20 rounded-none rounded-br-3xl border-t border-t-white/20 text-white"
         >
           <span className="text-base sm:text-xl font-semibold">Submit</span>
         </motion.button>

@@ -2,14 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "motion/react";
 import CombinationCard from "@/components/cards/combinationcard";
-import{ motion } from "motion/react";
-
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert"
+import FloatingAnimation from "@/components/animations/Floating_Animations";
 
 import AlertCard from "@/components/cards/alertCard";
 
@@ -66,7 +61,7 @@ export default function Home() {
   };
 
   const handleHintActive = async () => {
-    setAlertMessage((`definitely not ${initCode}`))
+    setAlertMessage((`Definitely not ${initCode}`))
     setAnimationKey((prev) => prev + 1);
     setHintActive(true);
 
@@ -82,47 +77,60 @@ export default function Home() {
   });
 
 return (
-  <div className="relative flex min-h-screen w-full items-center justify-center p-4 sm:p-8 z-10">
+  <div className="relative flex min-h-screen w-full items-center justify-center p-4 sm:p-8 z-10 bg-hero-pattern bg-cover">
+      <div className="flex w-full h-full absolute mask-t-to-50% opacity-75">
+        <FloatingAnimation colorStops={["#080D14", "#00D2FF"]} amplitude={3} speed={0.7} blend={-1}/>
+      </div>
     <main className="flex flex-col items-center justify-center h-auto w-full max-w-xl bg-blue-300/10 backdrop-blur-sm">        
       <motion.div
 
-      initial={
+      initial=
+      {
         {
           x:-1000,
           opacity: 0,
         }
       }
 
-      animate={
+      animate=
+      {
         {
           x:[-1000, 50, 0],
           opacity: [0, 0, 1],        
         }
       }
       
-      transition={
+      transition=
+      {
         {
           duration: 0.5
         }
       }
       >
         <motion.div
-        initial={{
-          boxShadow: "0px 0px 50px rgba(0, 29, 201, 0)",
-        }}
+        initial=
+        {
+        {
+          boxShadow: "0px 0px 50px rgba(0, 180, 216, 0)",
+        }
+      }
 
-        animate={{
-          boxShadow: ["0px 0px 0px rgba(0, 0, 201, 0)", "0px 0px 50px rgba(100, 0, 201, 1)", "0px 0px 50px rgba(0, 0, 201, 0)"],
+        animate={
+          {
+          boxShadow: ["0px 0px 0px rgba(0, 180, 216, 0)", "0px 0px 50px rgba(0, 180, 216, 1)", "0px 0px 50px rgba(0, 180, 216, 0)"],
 
-        }}
+        }
+      }
 
-        transition={{
+        transition=
+        {
+          {
         repeat: Infinity,
         repeatType: "loop",
         duration: 4,
         ease: "linear",
-
-        }}
+        }
+      }
         >
         <CombinationCard
           secretCode={initCode} 
@@ -134,8 +142,7 @@ return (
           </h1>)}
           bodyText={(
             <p className="text-xl sm:text-2xl text-gray-200 text-center">
-              There is definitely something extremely important hidden behind this wall. <span className="text-md sm:text-xl">
-              </span>
+              There is definitely something extremely important hidden behind this wall.
           </p>
           )}
           onHintActive={handleHintActive} 
@@ -145,9 +152,13 @@ return (
         />
       </motion.div>
       </motion.div>
-
-      {(isSubmitting || hintActive) && (
-        <AlertCard _animationKey={0} value={alertMessage} className="absolute bottom-0 w-full h-full m-auto"/>)}
+      <AnimatePresence>
+        {(isSubmitting || hintActive) && (
+          <motion.div
+          initial={{opacity: 0, x:-20}} animate={{opacity: 1, x:0}} exit={{ opacity: 0}} transition={{duration: 0.5}} className="absolute inset-0 w-full h-full flex items-center justify-center">
+            <AlertCard _animationKey={0} value={alertMessage} className="w-full h-full"/>
+          </motion.div>)}
+      </AnimatePresence>
         </main>
         </div>
 )
