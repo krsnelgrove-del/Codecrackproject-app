@@ -1,4 +1,3 @@
-// config/dashboardCards.ts
 import React from "react";
 
 import {
@@ -44,7 +43,7 @@ export const DashboardCards: CardConfig[] = [
     id: "data-tracker",
     title: "Data Tracker",
     component: DataTrackerCard,
-    initialData: { decryptedMb: 812 },
+    initialData: { memoryUsage: 812, memoryMax: 1024 },
   },
   {
     id: "decryption-efficiency",

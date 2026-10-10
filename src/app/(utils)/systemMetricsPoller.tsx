@@ -42,7 +42,7 @@ export function SystemMetricsPoller() {
       }
     };
 
-        const visitorPoll = async () => {
+    const visitorPoll = async () => {
       try {
         const response = await fetch("/api/visitorCount", {
           signal: controller.signal,
@@ -66,10 +66,42 @@ export function SystemMetricsPoller() {
       }
     };
 
+    const memoryPoll = async () => {
+      try {
+        const response = await fetch("/api/memoryMetric", {
+          signal: controller.signal,
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`HTTP error 500 thrown:  ${response.status}: ${errorText}`);
+}
+
+        const data = await response.json();
+
+        batchUpdate({
+          memoryUsage: data.usage,
+          memoryMax: data.max,
+        });
+
+        console.log("Memory metrics updated:", data); // Debugging line
+        
+      } catch (err: any) {
+        if (err.name !== "AbortError") {
+          console.error("Metrics polling failed:", err);
+        }
+      }
+    };
+
     networkPoll(); // Run immediately on mount
     visitorPoll(); // Run immediately on mount
+    memoryPoll(); // Run immediately on mount
 
-    const interval = setInterval(networkPoll, 1000);
+    const interval = setInterval(() => {
+      networkPoll();
+      memoryPoll();
+    }, 1000); // Poll every 1 second
 
     return () => {
       controller.abort();
